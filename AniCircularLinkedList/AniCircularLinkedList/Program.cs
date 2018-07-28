@@ -42,6 +42,14 @@ namespace AniCircularLinkedList
                             case "2":
                                 list.AddToEnd(itemToAdd);
                                 break;
+                            case "3":
+                                Console.WriteLine("");
+                                break;
+                            case "4":
+                                Console.WriteLine("Which index would you like to add after?");
+                                int indexToAdd = int.Parse(Console.ReadLine()) - 1;
+                                list.AddAfterIndex(indexToAdd, itemToAdd);
+                                break;
                             default:
                                 break;
                         }

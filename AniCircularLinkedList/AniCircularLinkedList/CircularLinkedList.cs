@@ -16,6 +16,7 @@ namespace AniCircularLinkedList
 
         }
 
+        /*
         public CircularLinkedListNode<T> this[int index]
         {
             get
@@ -30,7 +31,8 @@ namespace AniCircularLinkedList
             }
             
         }
-        
+        */
+
         //IsEmpty
         public bool IsEmpty()
         {
@@ -38,13 +40,12 @@ namespace AniCircularLinkedList
         }
         public IEnumerator<CircularLinkedListNode<T>> GetEnumerator()
         {
-            int count = 0;
-            CircularLinkedListNode<T> currentNode = Head;  
-            while(count != Count)
+            CircularLinkedListNode<T> currentNode = Head;
+            for (int i = 0; i < Count; i++)
             {
                 yield return currentNode;
                 currentNode = currentNode.Next;
-                count++;
+
             }
         }
         //AddFirst
@@ -79,12 +80,14 @@ namespace AniCircularLinkedList
             else
             {
                 Tail.Next = new CircularLinkedListNode<T>(itemToAdd, Head, Tail);
+                Tail.Next.Previous = Tail;
                 Tail = Tail.Next;
-
+                Tail.Next = Head;
+                Head.Previous = Tail;
             }
             Count++;
         }
-        //AddBefore
+        //AddAfter
         public void AddAfterIndex(int index, T itemToAdd)
         {
             if(IsEmpty())
@@ -92,9 +95,44 @@ namespace AniCircularLinkedList
                 Head = new CircularLinkedListNode<T>(itemToAdd);
                 Tail = Head; 
             }
-            else if()
+            else
+            {
+                CircularLinkedListNode<T> currentNode = Head;
+                int count = 0;
+                while(count < index)
+                {
+                    currentNode = currentNode.Next;
+                    count++;
+                }
+                
+                if(currentNode.Next == Head)
+                {
+                    AddToEnd(itemToAdd);
+                }
+                else
+                {
+                    CircularLinkedListNode<T> nodeToAdd = new CircularLinkedListNode<T>(itemToAdd, currentNode.Next, currentNode);
+                    currentNode.Next = nodeToAdd;
+                    currentNode.Next.Previous = nodeToAdd;
+                    Count++;
+                }
+
+            }
+           
         }
-        //AddAfter
+        //AddBefore
+        public void AddBeforeIndex(int index, T itemToAdd)
+        {
+            if (IsEmpty())
+            {
+                Head = new CircularLinkedListNode<T>(itemToAdd);
+                Tail = Head;
+            }
+            else
+            {
+
+            }
+        }
 
         //RemoveFirst
         //RemoveLast
