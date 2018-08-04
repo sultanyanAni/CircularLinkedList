@@ -11,6 +11,7 @@ namespace AniCircularLinkedList
         static void Main(string[] args)
         {
             CircularLinkedList<int> list = new CircularLinkedList<int>();
+            int index = 0;
             bool keepLooping = true;
             while (keepLooping)
             {
@@ -43,14 +44,37 @@ namespace AniCircularLinkedList
                                 list.AddToEnd(itemToAdd);
                                 break;
                             case "3":
-                                Console.WriteLine("");
+                                Console.WriteLine("Which index would you like to add before?");
+                                index = int.Parse(Console.ReadLine()) - 1;
+                                list.AddBeforeIndex(index, itemToAdd);
                                 break;
                             case "4":
                                 Console.WriteLine("Which index would you like to add after?");
-                                int indexToAdd = int.Parse(Console.ReadLine()) - 1;
-                                list.AddAfterIndex(indexToAdd, itemToAdd);
+                                index = int.Parse(Console.ReadLine()) - 1;
+                                list.AddAfterIndex(index, itemToAdd);
                                 break;
                             default:
+                                break;
+                        }
+                        break;
+                    case "2":
+                        Console.WriteLine("Where would you like to remove an item from?");
+                        Console.WriteLine("1) From the front");
+                        Console.WriteLine("2) From the end");
+                        Console.WriteLine("3) At an index");
+                        response = Console.ReadLine();
+                        switch (response)
+                        {
+                            case "1":
+                                list.RemoveFirst();
+                                break;
+                            case "2":
+                               list.RemoveLast();
+                                break;
+                            case "3":
+                                Console.WriteLine("Which index would you like to remove from?");
+                                index = int.Parse(Console.ReadLine()) - 1;
+                                list.RemoveAt(index);
                                 break;
                         }
                         break;

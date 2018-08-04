@@ -83,8 +83,9 @@ namespace AniCircularLinkedList
                 Tail = Tail.Next;
                 Tail.Next = Head;
                 Head.Previous = Tail;
+                Count++;
             }
-            Count++;
+           
         }
         //AddAfter
         public void AddAfterIndex(int index, T itemToAdd)
@@ -135,11 +136,18 @@ namespace AniCircularLinkedList
                     currentNode = currentNode.Next;
                     count++;
                 }
-
-                CircularLinkedListNode<T> nodeToAdd = new CircularLinkedListNode<T>(itemToAdd, currentNode, currentNode.Previous);
-                currentNode.Previous.Next = nodeToAdd;
-                currentNode.Previous = nodeToAdd;
-                Count++;
+                if (currentNode == Head)
+                {
+                    AddToFront(itemToAdd);
+                }
+                else
+                {
+                    CircularLinkedListNode<T> nodeToAdd = new CircularLinkedListNode<T>(itemToAdd, currentNode, currentNode.Previous);
+                    currentNode.Previous.Next = nodeToAdd;
+                    currentNode.Previous = nodeToAdd;
+                    Count++;
+                }
+                
 
 
             }
@@ -148,9 +156,79 @@ namespace AniCircularLinkedList
         //RemoveFirst
         public bool RemoveFirst()
         {
+            if(Head == null)
+            {
+                return false;
+            }
 
+            if(Tail == Head)
+            {
+                Head = null;
+                Count--;
+                return true;
+            }
+            else
+            {
+                Head = Head.Next;
+                Head.Previous = Tail;
+                Tail.Next = Head;
+                Count--;
+                return true;
+            }
+          
         }
         //RemoveLast
+        public bool RemoveLast()
+        {
+            if (Head == null)
+            {
+                return false;
+            }
+
+            if (Tail == Head)
+            {
+                Head = null;
+                Count--;
+                return true;
+            }
+            else
+            {
+                Tail = Tail.Previous;
+                Tail.Next = Head;
+                Head.Previous = Tail;
+                Count--;
+                return true;
+            }
+
+
+        }
         //RemoveAt
+        public bool RemoveAt(int index)
+        {
+            if(Head == null || index > Count)
+            {
+                return false;
+            }
+
+            if(index == 0)
+            {
+                RemoveFirst();
+                return true;
+            }
+            else
+            {
+                CircularLinkedListNode<T> currentNode = Head;
+                int count = 0;
+                while(count < index)
+                {
+                    currentNode = currentNode.Next;
+                    count++;
+                }
+                currentNode.Previous.Next = currentNode.Next;
+                currentNode.Next.Previous = currentNode.Previous;
+                Count--;
+                return true;
+            }
+        }
     }
 }
