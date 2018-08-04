@@ -73,8 +73,7 @@ namespace AniCircularLinkedList
         {
             if(IsEmpty())
             {
-                Head = new CircularLinkedListNode<T>(itemToAdd);
-                Tail = Head;
+                AddToFront(itemToAdd);
                
             }
             else
@@ -92,8 +91,7 @@ namespace AniCircularLinkedList
         {
             if(IsEmpty())
             {
-                Head = new CircularLinkedListNode<T>(itemToAdd);
-                Tail = Head; 
+                AddToFront(itemToAdd);
             }
             else
             {
@@ -114,27 +112,44 @@ namespace AniCircularLinkedList
                     CircularLinkedListNode<T> nodeToAdd = new CircularLinkedListNode<T>(itemToAdd, currentNode.Next, currentNode);
                     currentNode.Next = nodeToAdd;
                     currentNode.Next.Previous = nodeToAdd;
-                    Count++;
+                   
                 }
 
             }
-           
+         
+
         }
         //AddBefore
         public void AddBeforeIndex(int index, T itemToAdd)
         {
             if (IsEmpty())
             {
-                Head = new CircularLinkedListNode<T>(itemToAdd);
-                Tail = Head;
+                AddToFront(itemToAdd);
             }
             else
             {
+                CircularLinkedListNode<T> currentNode = Head;
+                int count = 0;
+                while(count < index)
+                {
+                    currentNode = currentNode.Next;
+                    count++;
+                }
+
+                CircularLinkedListNode<T> nodeToAdd = new CircularLinkedListNode<T>(itemToAdd, currentNode, currentNode.Previous);
+                currentNode.Previous.Next = nodeToAdd;
+                currentNode.Previous = nodeToAdd;
+                Count++;
+
 
             }
         }
 
         //RemoveFirst
+        public bool RemoveFirst()
+        {
+
+        }
         //RemoveLast
         //RemoveAt
     }
